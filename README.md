@@ -30,4 +30,4 @@ A React-based Pipeline Editor for creating and managing Directed Acyclic Graphs 
 - **Auto-Layout**: Used `dagre` to compute positions and `fitView` to center the graph.
 
 ## Screenshots
-![Editor]([screenshots/editor.png](https://i.ibb.co/xtWtTgFN/image.png))
+![Editor](https://i.ibb.co/xtWtTgFN/image.png)

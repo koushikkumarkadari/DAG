@@ -422,3 +422,7 @@ body {
   align-items: center;
   gap: 8px;
 }
+.controls button {
+  margin-right: 10px;
+  padding: 8px 16px;
+}

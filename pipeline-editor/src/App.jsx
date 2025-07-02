@@ -5,6 +5,8 @@ import ReactFlow, {
   addEdge,
   Background,
   Controls as FlowControls,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import dagre from 'dagre'; // Import dagre at the top
@@ -12,6 +14,7 @@ import CustomNode from './components/CustomNode';
 import Controls from './components/Controls';
 import { validateDAG } from './components/ValidationService';
 import './App.css'; 
+import NodeLabelModal from './components/NodeLabelModal';
 
 const initialNodes = [];
 const initialEdges = [];
@@ -33,6 +36,25 @@ function App() {
   const addNode = useCallback(() => {
     setModalOpen(true);
   }, []);
+  
+  const deleteSelected = useCallback(() => {
+  const selectedNodes = nodes.filter((node) => node.selected);
+  const selectedEdges = edges.filter((edge) => edge.selected);
+  if (selectedNodes.length > 0 || selectedEdges.length > 0) {
+    setNodes((nds) => nds.filter((node) => !node.selected));
+    setEdges((eds) =>
+      eds.filter(
+        (edge) =>
+          !edge.selected &&
+          !selectedNodes.some(
+            (node) => node.id === edge.source || node.id === edge.target
+          )
+      )
+    );
+    setTimeout(() => fitView({ duration: 500 }), 100);
+    }
+  }, [nodes, edges, fitView]);
+
 
   // Handle modal submit
   const handleModalSubmit = useCallback((label) => {
@@ -56,30 +78,6 @@ function App() {
     },
     [setEdges]
   );
-
-  // Handle delete key press
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Delete') {
-        const selectedNodes = nodes.filter((node) => node.selected);
-        const selectedEdges = edges.filter((edge) => edge.selected);
-        if (selectedNodes.length > 0 || selectedEdges.length > 0) {
-          setNodes((nds) => nds.filter((node) => !node.selected));
-          setEdges((eds) =>
-            eds.filter(
-              (edge) =>
-                !edge.selected &&
-                !selectedNodes.some(
-                  (node) => node.id === edge.source || node.id === edge.target
-                )
-            )
-          );
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nodes, edges]);
 
   // Validate DAG on nodes/edges change
   useEffect(() => {
@@ -140,7 +138,7 @@ function App() {
         onClose={() => setModalOpen(false)}
         onSubmit={handleModalSubmit}
       />
-      <Controls addNode={addNode} applyAutoLayout={applyAutoLayout} />
+      <Controls addNode={addNode} applyAutoLayout={applyAutoLayout} deleteSelected={deleteSelected} />
       <div className="status">
         {isValidDag?.isValid ? (
           <span className="valid">Valid DAG</span>
@@ -154,45 +152,12 @@ function App() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        onNodesChange={changes => setNodes(nds => applyNodeChanges(changes, nds))}
+        onEdgesChange={changes => setEdges(eds => applyEdgeChanges(changes, eds))}
       >
         <Background />
         <FlowControls />
       </ReactFlow>
-    </div>
-  );
-}
-
-function NodeLabelModal({ open, onClose, onSubmit }) {
-  const [label, setLabel] = useState('');
-  
-  useEffect(() => {
-    if (open) setLabel('');
-  }, [open]);
-  
-  if (!open) return null;
-  
-  return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <h3>Enter node label</h3>
-        <input
-          autoFocus
-          value={label}
-          onChange={e => setLabel(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter' && label.trim()) onSubmit(label); }}
-          placeholder="Node label..."
-        />
-        <div className="modal-actions">
-          <div className="modal-buttons">
-            <button onClick={() => onSubmit(label)} disabled={!label.trim()}>
-              <span className="add-button">Add</span>
-            </button>
-            <button onClick={onClose}>
-              <span>Cancel</span>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

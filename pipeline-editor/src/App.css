@@ -1,0 +1,424 @@
+/* App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  overflow: hidden;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Animated background */
+.app::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+.controls {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  z-index: 10;
+}
+
+.controls button {
+  margin-right: 15px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.controls button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(31, 38, 135, 0.4);
+}
+
+.controls button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px 0 rgba(31, 38, 135, 0.2);
+}
+
+.status {
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px 0 rgba(31, 38, 135, 0.2);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.valid {
+  color: #4ade80;
+  text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+}
+
+.invalid {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(248, 113, 113, 0.5);
+}
+
+/* React Flow Container */
+.react-flow__container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Custom Node Styles */
+.custom-node {
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.react-flow__node {
+  width: auto;
+}
+
+.react-flow__node:hover .custom-node {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+}
+
+.react-flow__node.selected .custom-node {
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2),
+              0 12px 40px 0 rgba(31, 38, 135, 0.5);
+}
+
+/* Handle Styles */
+.react-flow__handle {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.react-flow__handle:hover {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Edge Styles */
+.react-flow__edge-path {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+/* React Flow Controls */
+.react-flow__controls {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  margin: 20px;
+}
+
+.react-flow__controls-button {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.react-flow__controls-button svg {
+  fill: white;
+}
+
+/* Background Pattern */
+.react-flow__background pattern circle {
+  fill: rgba(255, 255, 255, 0.1);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-node {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .controls {
+    padding: 15px;
+  }
+  
+  .controls button {
+    padding: 10px 18px;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+  
+  .status {
+    font-size: 14px;
+  }
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  min-width: 300px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.modal input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Add this to App.css for floating orbs background */
+.app::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Floating orbs animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  33% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  66% {
+    transform: translateY(10px) translateX(-10px);
+  }
+}
+
+.app::after {
+  animation: float 10s ease-in-out infinite;
+}
+
+/* Modal Button Styles */
+.modal-buttons {
+  
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add/Submit Button - Primary */
+.modal-buttons button:first-child {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: black;
+  box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.2);
+}
+
+.modal-buttons button:first-child:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(31, 38, 135, 0.4);
+}
+
+.modal-buttons button:first-child:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px 0 rgba(31, 38, 135, 0.2);
+}
+
+/* Cancel Button - Secondary */
+.modal-buttons button:last-child {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: black;
+  box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.1);
+}
+
+.modal-buttons button:last-child:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(31, 38, 135, 0.2);
+}
+
+/* Disabled State */
+.modal-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Ripple Effect */
+.modal-buttons button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.modal-buttons button:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Focus State */
+.modal-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Icon Support (if you add icons) */
+.modal-buttons button span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
